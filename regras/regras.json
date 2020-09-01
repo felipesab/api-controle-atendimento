@@ -1,0 +1,9 @@
+{
+    "regras" : [
+        {
+            "dsemana" : "TODOS",
+            "horarioinicio" : "09:00",
+            "horariofim" : "14:00"
+        }
+    ]
+}
