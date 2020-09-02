@@ -1,5 +1,7 @@
-const routerCadastro = require("./cadastro");
+const cadastroRouter = require("./cadastro");
 const listarRegrasRouter = require("./listar");
+const deletarRouter = require("./deletar");
+const horariosRouter = require("./horarios");
 
 const mainRouter = (app, fs) => {
     app.get("/", (req, res)=>{
@@ -9,6 +11,9 @@ const mainRouter = (app, fs) => {
     });
 
     listarRegrasRouter(app, fs);
+    cadastroRouter(app, fs);
+    deletarRouter(app, fs);
+    horariosRouter(app, fs);
 }
 
 module.exports = mainRouter;

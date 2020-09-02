@@ -1,7 +1,7 @@
-const listarRouter = (app, fs) =>{
+const listarRoutes = (app, fs) =>{
     const path = "./regras/regras.json";
 
-    app.get("/listar", (req, res)=>{
+    app.get("/listar/:dia", (req, res)=>{
         fs.readFile(path, "utf8", (err, data)=>{
             if(err){
                 throw err;
@@ -12,4 +12,4 @@ const listarRouter = (app, fs) =>{
     });
 }
 
-module.exports = listarRouter;
+module.exports = listarRoutes;

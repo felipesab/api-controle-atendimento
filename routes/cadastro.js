@@ -1,16 +1,10 @@
-const cadastroRouter = (app, fs) => {
-    app.get("/cadastro", (req, res)=>{
+const cadastroRoutes = (app, fs) => {
+    app.post("/cadastro/:dia/:inicio/:fim", (req, res)=>{
         res.status(200).send({
-            mensagem : 'OK! GET'
-        });
-    });
-
-    app.get("/cadastro/:data", (req, res)=>{
-        res.status(200).send({
-            mensagem : 'OK! GET with Parameters'
+            mensagem : 'OK! post'
         });
     });
 }
 
 
-module.exports = cadastroRouter;
+module.exports = cadastroRoutes;

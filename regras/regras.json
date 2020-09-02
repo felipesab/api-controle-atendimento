@@ -1,7 +1,7 @@
 {
     "regras" : [
         {
-            "dsemana" : "TODOS",
+            "dia" : ["segunda", "quarta", "28-10-2020"],
             "horarioinicio" : "09:00",
             "horariofim" : "14:00"
         }
