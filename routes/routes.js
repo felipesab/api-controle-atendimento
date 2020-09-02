@@ -1,18 +1,15 @@
-const cadastroRouter = require("./cadastro");
-const listarRegrasRouter = require("./listar");
-const deletarRouter = require("./deletar");
+const regrasRouter = require("./regras");
 const horariosRouter = require("./horarios");
 
 const mainRouter = (app, fs) => {
     app.get("/", (req, res)=>{
         res.status(200).send({
-            mensagem : "Te amo meu bebe"
+            regras : "/regras para métodos de regras",
+            horarios : "/horarios para consultar metodos de horarios"
         });
     });
 
-    listarRegrasRouter(app, fs);
-    cadastroRouter(app, fs);
-    deletarRouter(app, fs);
+    regrasRouter(app, fs);
     horariosRouter(app, fs);
 }
 
