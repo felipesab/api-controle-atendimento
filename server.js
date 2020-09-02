@@ -1,9 +1,10 @@
 const http = require("http");
-const app = require("./app");
+const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const fs = require("fs");
-
 const port = process.env.PORT || 3000;
+const routes = require("./routes/routes")(app, fs);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
