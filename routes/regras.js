@@ -9,28 +9,102 @@ const regrasRoutes = (app, fs) => {
 		});
 	})
 
-	//listas todas regras cadastradas 
 	app.get("/regras/listar", (req, res) => {
-		fs.readFile(path, "utf8", (err, data) => {
+		fs.readFile(path, "utf8",	(err, data) => {
 			if (err) {
-				throw err;
+				let output = {
+					status : "erro",
+					message : err
+				};
+
+				res.json(output);
 			}
 
 			res.send(JSON.parse(data));
 		})
 	});
+	
+	app.post("/regras/cadastro", (req, res) => {
+		fs.readFile(path, "utf8", (err, data)=>{
+			if(err){
+				let output = {
+					status : "erro",
+					message : err
+				};
 
-	//deletar regra de dia especifico
-	app.delete("/regras/deletar/:dia", (req, res) => {
-		res.status(200).send("OK! deletar");
-	});
+				res.json(output);
+			}
+			else{
+				let rules = JSON.parse(data);
 
-	//cadastrar nova regra
-	app.post("/regras/cadastro/:dia/:inicio/:fim", (req, res) => {
-		res.status(200).send({
-			mensagem: 'OK! post'
+				rules.push(req.body);
+
+				fs.writeFile(path, JSON.stringify(rules), (err)=>{
+					if(err){
+						let output = {
+							status : "error",
+							message : err
+						}
+
+						res.json(output);
+					}
+					else{
+						let output = {
+							status : "sucesso",
+							message : "Rule succesfully created!"
+						};
+
+						res.json(output);
+					}
+				});
+			}
+			
 		});
 	});
+	
+	app.delete("/regras/deletar", (req, res) =>{
+		fs.readFile(path, "utf8", (err, data)=>{
+			if(err){
+				let output ={
+					status : "error",
+					message : err
+				}
+
+				res.json(output);
+			}
+			else{
+				let day = req.query.day;
+				let rules = JSON.parse(data);
+				let date = new Date()
+
+				rules = rules.filter(i => {
+					if(i.day == day)
+						return true;
+					return false;
+				});
+
+				fs.writeFile(path, JSON.stringify(rules), (err)=>{
+					if(err){
+						let output = {
+							status : "erro",
+							message : err
+						}
+
+						res.json(output);
+					}
+					else{
+						let output = {
+							status : "success",
+							message : "rule succesfully deleted"
+						}
+
+						res.json(output);
+					}
+				});
+			}
+		});
+	});
+
 }
 
 module.exports = regrasRoutes;

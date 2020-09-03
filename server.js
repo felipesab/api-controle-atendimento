@@ -4,10 +4,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const port = process.env.PORT || 3000;
-const routes = require("./routes/routes")(app, fs);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const routes = require("./routes/routes")(app, fs);
 
 const server = http.createServer(app);
 server.listen(port, () => {
