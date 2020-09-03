@@ -75,7 +75,6 @@ const regrasRoutes = (app, fs) => {
 			else{
 				let day = req.query.day;
 				let rules = JSON.parse(data);
-				let date = new Date()
 
 				rules = rules.filter(i => {
 					if(i.day == day)
