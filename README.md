@@ -23,15 +23,23 @@
   
   Os objetos de sucesso terão a seguinte forma:
 
-  * **status:** success <br />
-    **message:** <mensagem indicando que a rotina obteve êxito>
+  ```
+     {
+        "status": "success",
+        "message" : <mensagem indicando sucesso da rotina>
+     }
+   ```
  
 * **Resposta de erro:**
 
   Em caso de erro serão exibidos objetos com a estrutura abaixo:
 
-  * **status:** error <br />
-    **message:** <mensagem indicando o erro ocorrido>
+  ```
+     {
+        "status": "error",
+        "message" : <mensagem indicando o erro propagado>
+     }
+   ```
 
 
 
