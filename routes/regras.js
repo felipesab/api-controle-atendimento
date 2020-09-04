@@ -11,6 +11,10 @@ function validateDay(day){
 }
 
 function dayController(day){
+	if(day == undefined){
+		throw new Error("É necessário enviar uma regra para cadastro.");
+	}
+
 	try{
 		if(typeof(day)=="object"){
 			for(x in day){
@@ -96,6 +100,10 @@ const regrasRoutes = (app, fs) => {
 	
 	app.delete("/regras/deletar/:day", async (req, res) =>{
 		try{
+			if(req.params.day == undefined){
+				throw new Error("É necessário informar dia da regra a ser deletada");
+			}
+
 			let day = req.params.day;
 			let data = JSON.parse(await fs.readFile(path, "utf8"));
 

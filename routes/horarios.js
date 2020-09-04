@@ -14,6 +14,13 @@ const horariosRoutes = (app, fs) => {
 	const path = "./regras/regrasExtra.json"
 
 	app.get("/horarios/:start_day/:end_day", async (req, res) => {
+		if(req.params.start_day == undefined || req.params.end_day){
+			res.send({
+				status : "error",
+				message : "É necessário informar os paramêtros para a consulta"
+			})
+		}
+
 		const start_day = moment(req.params.start_day, "DD-MM-YYYY").format();
 		const end_day = moment(req.params.end_day, "DD-MM-YYYY").format();
 
