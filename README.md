@@ -31,7 +31,7 @@
   Em caso de erro serão exibidos objetos com a estrutura abaixo:
 
   * **status:** error <br />
-    **message:** 
+    **message:** <mensagem indicando o erro ocorrido>
 
 
 
