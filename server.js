@@ -13,3 +13,5 @@ const routes = require("./routes/routes")(app, fs);
 const server = http.createServer(app).listen(port, ()=>{
 	console.log("listening on port %s", server.address().port);
 });
+
+module.exports = server;
