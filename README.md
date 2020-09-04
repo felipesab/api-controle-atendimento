@@ -30,8 +30,8 @@
 
   Em caso de erro serão exibidos objetos com a estrutura abaixo:
 
-  * **status:** "error" <br />
-    **message:** <mensagem indicando o erro ocorrido>
+  * **status:** error <br />
+    **message:**  <mensagem indicando o erro ocorrido>
 
 
 
