@@ -1,64 +1,6 @@
 const moment = require("moment");
+const rules = require("./../rulesMethods.js");
 
-function validateDay(day){
-	const dias = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado", "todos"]
-	const index = dias.indexOf(day);
-	const validMoment = moment(day, "DD-MM-YYYY").isValid()
-	
-	if(index == -1 && !validMoment){
-		throw new Error("Invalid day format")
-	}
-}
-
-function dayController(day){
-	if(day == undefined){
-		throw new Error("É necessário enviar uma regra para cadastro.");
-	}
-
-	try{
-		if(typeof(day)=="object"){
-			for(x in day){
-				validateDay(day[x]);
-			}
-		}
-		else{
-			validateDay(day);
-		}
-	}
-	catch(err){
-		throw err
-	}
-}
-
-function deleteController(rulesFile, day){
-	let found = false
-
-	for(i in rulesFile){
-		if(typeof(rulesFile[i].day)=="object"){
-			const index = rulesFile[i].day.indexOf(day);
-			if(index > -1){
-				if(rulesFile[i].day.length > 1)
-					rulesFile[i].day.splice(index, 1);
-				else
-					rulesFile.splice(i, 1);
-				found = true;
-			}
-		}
-		else{
-			if(rulesFile[i].day == day){
-				rulesFile.splice(i, 1);
-				found = true;
-			} 
-		}
-	}
-
-	if(found){
-		return rulesFile
-	}
-	else{
-		throw new Error("Rule not found for that day");
-	}
-}
 
 const regrasRoutes = (app, fs) => {
 	const path = "./regras/regras.json";
@@ -78,15 +20,15 @@ const regrasRoutes = (app, fs) => {
 	
 	app.post("/regras/cadastro", async (req, res) => {
 		try{
-			const data = JSON.parse(await fs.readFile(path, "utf8"));
+			const rulesFile = JSON.parse(await fs.readFile(path, "utf8"));
 			
-			dayController(req.body.day);
-
-			await data.push(req.body);
-			fs.writeFile(path, JSON.stringify(data));
+			const isValid = rules.dayValidatorController(req.body.day);
+			if( isValid)
+				 rules.cadastroController(rulesFile, req.body);
+			
 			res.send({
 				status: "success",
-				message: "New rule succesfully added!"
+				message: "Nova regra adicionada com sucesso!"
 			})
 
 		}
@@ -98,23 +40,23 @@ const regrasRoutes = (app, fs) => {
 		}
 	});
 	
-	app.delete("/regras/deletar/:day", async (req, res) =>{
+	app.delete("/regras/deletar", async (req, res) =>{
 		try{
-			if(req.params.day == undefined){
+			if(req.body.day == undefined){
 				throw new Error("É necessário informar dia da regra a ser deletada");
 			}
 
-			let day = req.params.day;
+			let day = req.body.day;
 			let data = JSON.parse(await fs.readFile(path, "utf8"));
 
-			validateDay(day);
-			data = deleteController(data, await day);
-
-			fs.writeFile(path, JSON.stringify(await data));
+			const isValid = rules.dayValidatorController(day);
+			if(isValid){
+				rules.deleteController(data, day);
+			}
 
 			res.send({
 				status : "success",
-				message : "Rule succesfully deleted!"
+				message : "Regra deletada com sucesso!"
 			});
 		}
 		catch(err){

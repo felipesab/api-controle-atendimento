@@ -1,9 +1,12 @@
 const moment = require("moment");
 
 const getDates = (dataFile, intervals) =>{
-		return dataFile.filter((i)=>{
-			let day = moment(i.day, "DD-MM-YYYY").format();
-			if(day >= intervals.start_day && day <= intervals.end_day){
+		if(dataFile.diario == undefined || dataFile.diario.length < 1)
+			throw new Error("Não há regras cadastradas")
+
+		return dataFile.diario.filter((i)=>{
+			let day = moment(i.day, "DD-MM-YYYY");
+			if(intervals.start_day <= day && day <= intervals.end_day){
 				return true;
 			}
 				return false;
@@ -11,18 +14,18 @@ const getDates = (dataFile, intervals) =>{
 };
 
 const horariosRoutes = (app, fs) => {
-	const path = "./regras/regrasExtra.json"
+	const path = "./regras/regras.json"
 
-	app.get("/horarios/:start_day/:end_day", async (req, res) => {
-		if(req.params.start_day == undefined || req.params.end_day){
+	app.get("/horarios", async (req, res) => {
+		if(req.body.start_day == undefined || req.body.end_day == undefined){
 			res.send({
 				status : "error",
 				message : "É necessário informar os paramêtros para a consulta"
 			})
 		}
 
-		const start_day = moment(req.params.start_day, "DD-MM-YYYY").format();
-		const end_day = moment(req.params.end_day, "DD-MM-YYYY").format();
+		const start_day = moment(req.body.start_day, "DD-MM-YYYY");
+		const end_day = moment(req.body.end_day, "DD-MM-YYYY");
 
 		const intervals = {
 			start_day : start_day,
@@ -32,16 +35,17 @@ const horariosRoutes = (app, fs) => {
 		if(intervals.start_day > intervals.end_day){
 			res.send({
 				status : "error",
-				message : "The start_day argument cannot be greater than end_day"
+				message : "O dia inicial não pode ser maior que o dia final"
 			})
 		}
 		else{
 			try{
-				let data = await fs.readFile(path, "utf8");
-				const dates = getDates(JSON.parse(data), intervals);
+				let data = JSON.parse(await fs.readFile(path, "utf8"));
+				const dates = getDates(data, intervals);
 
-				await dates.sort((a, b)=>{
-						return moment(a.day, "DD-MM-YYYY").diff(moment().format(), "months") - moment(b.day, "DD-MM-YYYY").diff(moment().format(), "months");
+				dates.sort((a, b)=>{
+						const bool = moment(a.day, "DD-MM-YYYY").diff(moment(), "months") - moment(b.day, "DD-MM-YYYY").diff(moment(), "months");
+						return bool;
 				}); 
 
 				res.send(dates);
