@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:3000/regras",
+			"name": "GET /regras",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -25,7 +25,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/cadastro",
+			"name": "POST regras/cadastro",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -54,7 +54,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/cadastro",
+			"name": "POST regras/cadastro",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -83,13 +83,13 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/cadastro",
+			"name": "POST regras/cadastro",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"day\" : [\"segunda\", \"sexta\"],\n    \"intervals\":[\n        {\n            \"start\" : \"7:00\"\n        },\n        {\n            \"end\" : \"8:00\"\n        }\n    ]\n}",
+					"raw": "{\n    \"day\" : \"quarta\",\n    \"intervals\" : [{\n        \"start\" : \"11:00\"\n    },\n    {\n        \"end\" : \"15:00\"\n    }]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -112,20 +112,28 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/deletar/todos",
+			"name": "DELETE /regras/deletar",
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"day\" : \"todos\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:3000/regras/deletar/todos",
+					"raw": "localhost:3000/regras/deletar",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"regras",
-						"deletar",
-						"todos"
+						"deletar"
 					]
 				},
 				"description": "DELETE: deletando a regra geral"
@@ -133,20 +141,28 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/deletar/segunda",
+			"name": "DELETE /regras/deletar",
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"day\" : \"05-05-2020\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:3000/regras/deletar/segunda",
+					"raw": "localhost:3000/regras/deletar",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"regras",
-						"deletar",
-						"segunda"
+						"deletar"
 					]
 				},
 				"description": "DELETE: deletando regras para segunda"
@@ -154,23 +170,61 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/regras/deletar/sexta",
+			"name": "DELETE /regras/deletar",
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"day\" : \"quarta\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:3000/regras/deletar/sexta",
+					"raw": "localhost:3000/regras/deletar",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
 						"regras",
-						"deletar",
-						"sexta"
+						"deletar"
 					]
 				},
 				"description": "DELETE: deleta regras para sexta"
+			},
+			"response": []
+		},
+		{
+			"name": "/GET /horarios",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"start_day\" : \"05-10-2020\",\n    \"end_day\" : \"06-10-2020\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/horarios",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"horarios"
+					]
+				}
 			},
 			"response": []
 		}
